@@ -97,6 +97,8 @@ void VentanaPrincipal::incializarBolas() {
 
 		Bola *nueva = new Bola (posIniX,posIniY,velX,velY);
 		
+		if(i % 3 == 0) nueva->establecerImagen();
+		
 		nueva->nombre = nombres.at(i % nombres.length());	
 		bolas.append(nueva);	
 		
@@ -113,46 +115,9 @@ void VentanaPrincipal::paintEvent(QPaintEvent * e) {
 
 	pintor.fillRect(10,10,50,50,"Red");
 
-	for (int i=0; i < bolas.length() ; i++ ) {	
+	for (int i=0; i < bolas.length() ; i++ ) 
+		bolas.at(i)->pintar(pintor);
 	
-		pintor.setBrush(bolas[i]->color);
-		pintor.drawEllipse(bolas[i]->posX, bolas[i]->posY,
-							Bola::diametro,
-							Bola::diametro);
-		pintor.drawText(bolas[i]->posX ,
-				bolas[i]-> posY + Bola::diametro + 20 ,
-				 bolas[i]-> nombre);
-				 
-		pintor.drawText(bolas[i]->posX ,
-				bolas[i]-> posY - 10 ,
-				QString("vidas:  ") + QString::number(bolas[i]->vidas));
-				
-/********************** barra VERDA ***************************************/				
-		pintor.setBrush(QColor("Green"));
-		
-		int anchoBarra = Bola::diametro;
-		float division = (float) bolas[i]->vidas / (float) Bola::vidasIniciales;
-		
-		anchoBarra = anchoBarra * division;
-		pintor.drawRect(bolas.at(i)->posX,
-						bolas.at(i)->posY - 20,
-						anchoBarra,
-						5);
-		float acabaVerda = bolas.at(i)->posX  + anchoBarra ;
-		
-/********************** barra ROJA ***************************************/
-						
-		int mortes = Bola::vidasIniciales  -  bolas.at(i)->vidas; 
-		division = (float)mortes / (float)Bola::vidasIniciales ;
-		anchoBarra = Bola::diametro * division;
-						
-		pintor.setBrush(QColor("red"));
-		pintor.drawRect(acabaVerda,
-				bolas.at(i)->posY - 20,
-				anchoBarra,
-				5);
-		
-	}
 	
 	QColor colorJugador = QColor(255,0,0);
 	pintor.setBrush(colorJugador);
@@ -169,12 +134,13 @@ void VentanaPrincipal::slotTemporizador() {
 	//qDebug() << "revisar choques";
 	for (int i = 0; i < bolas.length() ; i++ ) {			
 		for (int j = i + 1; j < bolas.length() ; j++ ) {			
-			if (i != j )
+			if (i != j ){
 				if (bolas[i]->choca(bolas[j])) {
 					bolas[i]->vidas--;
 					bolas[j]->vidas--;
 					//qDebug() << "vida quitada "<< i << " " << j ;
 				}
+			}
 		}
 	}
 
@@ -419,6 +385,9 @@ bool VentanaPrincipal::crearBolaJson(QJsonValue &elemento){
 	Bola * nueva = new Bola(posX,posY,velX,velY);
 	nueva->nombre = nombre;
 	nueva->color = QColor(rojo,verde,azul);
+	
+	nueva->anchuraJuego = width();
+	nueva->alturaJuego = height();
 
 	bolas.append(nueva);
 

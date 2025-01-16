@@ -9,5 +9,11 @@ public:
 	Bola * miBola;
 	void paintEvent(QPaintEvent *evento);
 	void actualizarDibujo();
+	bool botonPulsado;
+	int clicX, clicY;
+	int nuevoClicX, nuevoClicY;
+	
+	void mousePressEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
 	
 };

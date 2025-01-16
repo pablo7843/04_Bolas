@@ -11,6 +11,7 @@ Bola::Bola() : Bola(0,0,0,0){
 Bola::Bola(float px, float py, float vx, float vy) :
 	posX(px), posY(py), velX(vx),velY(vy) {
 	
+	esImagen = false;
 	vidas = vidasIniciales;
 	color  = QColor(random()%256, random()%256, random()%256);
 
@@ -95,25 +96,60 @@ bool Bola::choca(Bola *otra) {
 
 }
 
+void Bola::pintar(QPainter &pintor){
+
+		pintor.setBrush(color);
+		pintor.drawEllipse(posX, posY,
+							Bola::diametro,
+							Bola::diametro);
+		pintor.drawText(posX ,
+				 posY + Bola::diametro + 20 ,
+				 nombre);
+				 
+		pintor.drawText(posX ,
+				posY - 25 ,
+				QString("vidas:  ") + QString::number(vidas));
+				
+/********************** barra VERDA ***************************************/				
+		pintor.setBrush(QColor("Green"));
+		
+		int anchoBarra = Bola::diametro;
+		float division = (float) vidas / (float) Bola::vidasIniciales;
+		
+		anchoBarra = anchoBarra * division;
+		pintor.drawRect(posX,posY - 20, anchoBarra,
+						5);
+		float acabaVerda = posX  + anchoBarra ;
+		
+/********************** barra ROJA ***************************************/
+						
+		int mortes = Bola::vidasIniciales  -  vidas; 
+		division = (float)mortes / (float)Bola::vidasIniciales ;
+		anchoBarra = Bola::diametro * division;
+						
+		pintor.setBrush(QColor("red"));
+		pintor.drawRect(acabaVerda,
+				posY - 20,
+				anchoBarra,
+				5);
+				
+		if (esImagen){
+			pintor.drawImage(posX,posY,imagen);
+		}
+
+}
 
 
+void Bola::establecerImagen(){
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	imagen = QImage("imagenes/images.png");
+	if(imagen.isNull()){
+		qDebug() << "la imagen no es valida mamon";
+		return;
+	}
+	imagen = imagen.scaled(diametro,diametro);
+	esImagen = true;
+}
 
 
 

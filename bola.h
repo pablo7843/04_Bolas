@@ -1,7 +1,9 @@
 #ifndef _BOLA_H
 #define _BOLA_H
 #include <QString>
+#include <QPainter>
 #include <QColor>
+#include <QImage>
 
 class Bola {
 
@@ -26,6 +28,13 @@ public:
 	
 	float distancia(Bola *otra);
 	bool choca(Bola *);
+	void pintar(QPainter &pintor);
+	
+	//Para imagenes
+	QImage imagen;
+	bool esImagen;
+	
+	void establecerImagen();
 
 };
 
