@@ -142,7 +142,7 @@ void Bola::pintar(QPainter &pintor){
 
 void Bola::establecerImagen(){
 
-	imagen = QImage("imagenes/images.png");
+	imagen = QImage("imagenes/pelota.png");
 	if(imagen.isNull()){
 		qDebug() << "la imagen no es valida mamon";
 		return;
@@ -151,6 +151,17 @@ void Bola::establecerImagen(){
 	esImagen = true;
 }
 
+
+void Bola::establecerImagen(QString ruta){
+
+	imagen = QImage(ruta);
+	if(imagen.isNull()){
+		qDebug() << "la imagen no es valida mamon";
+		return;
+	}
+	imagen = imagen.scaled(diametro,diametro);
+	esImagen = true;
+}
 
 
 

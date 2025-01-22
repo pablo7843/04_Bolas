@@ -67,6 +67,37 @@ void PanelPosicionBola::mouseReleaseEvent(QMouseEvent *event){
 }
 
 
+void PanelPosicionBola::dragEnterEvent(QDragEnterEvent *event){
+	
+	qDebug()<<"Me quieren arrastrar";
+	
+	const QMimeData * datos = event->mimeData();
+		
+	if(datos->hasImage()){
+		qDebug() << "estas pasando una foto mostro";
+	}
+	if(datos->hasText()){
+		qDebug() << "estas pasando un texto manin";
+	}
+	if(datos->hasUrls()){
+		
+		for(int i = 0; i< datos->urls().length();i++){
+			qDebug()<<i<< " " << datos->urls().at(i).url();
+			
+		}
+	}	
+	
+	//para que funcione el soltar	
+	event->accept();
+	
+}
+
+void PanelPosicionBola::dropEvent(QDropEvent *event){
+	
+	qDebug()<<"Estan soltando puta mierda";		
+	
+	miBola->establecerImagen(event->mimeData()->urls().at(0).path());
+}
 
 
 

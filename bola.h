@@ -35,6 +35,7 @@ public:
 	bool esImagen;
 	
 	void establecerImagen();
+	void establecerImagen(QString);
 
 };
 

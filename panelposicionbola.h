@@ -1,6 +1,9 @@
 #include "bola.h"
 #include <QPaintEvent>
 #include <QWidget>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
 
 class PanelPosicionBola : public QWidget{
 Q_OBJECT
@@ -13,7 +16,10 @@ public:
 	int clicX, clicY;
 	int nuevoClicX, nuevoClicY;
 	
+	void dropEvent(QDropEvent *);
+	void dragEnterEvent(QDragEnterEvent *event);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
+	
 	
 };
