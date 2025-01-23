@@ -1,0 +1,10 @@
+void PanelPosicionBola::paintEvent(QPaintEvent * event) {
+	QPainter pintor(this);
+	QBrush brush(miBola->color,Qt::Dense4Pattern);
+	
+	float posicionX = miBola->posX * width() / miBola->anchuraJuego;
+	float posicionY = miBola->posY * height() / miBola->alturaJuego;
+	
+	pintor.fillRect(posicionX-3,0,6,height(),brush);
+	pintor.fillRect(0,posicionY-3,width(),6,brush);
+}
